@@ -5,56 +5,104 @@ namespace Aula02RH
 {
     class Program
     {
-        static TipoFuncionarioEnum verificarOpcao() {
-            Console.WriteLine("\nEscolha o Tipo de Contrato (1 ou 2):\n1 - CLT\n2 - Aprendiz");
-            int opcao = int.Parse(Console.ReadLine());
-            TipoFuncionarioEnum enumeracao = (opcao == 1) ? TipoFuncionarioEnum.CLT : (opcao == 2) ? TipoFuncionarioEnum.Aprendiz : TipoFuncionarioEnum.Invalido;
-            if(enumeracao == TipoFuncionarioEnum.Invalido) {
-                Console.WriteLine("\nOpção inválida, tente novamente:");
-                return verificarOpcao();
-            }
-            return enumeracao;
-        }
-
-        static void Main(string[] args)
+        static void Main(string[] args) //Método principal / o código começa a ser executado a partir daqui
         {
-            bool validOpt = false;
-            Funcionarios func = new Funcionarios();
+            Funcionarios func = new Funcionarios(); //cria-se um obj do tipo "Funcionarios" que vai ser chamado de "func" // o operador "new" é para criar uma ref do obj na memória do computador
 
-            Console.WriteLine("\nDigite o ID do fucionário: ");
+            /*func.Id = 10;
+            func.Nome = "Neymar";
+            func.Cpf = "12345678910";
+            func.DataAdmissao = DateTime.Parse("01/01/2000");
+            func.Salario = 10000.00M; //M = força para que a tela entenda que trata-se de um decimal
+            func.TipoFuncionario = Models.Enuns.TipoFuncionarioEnum.CLT;*/
+
+            Console.WriteLine("Digite o Id do funcionário: ");
             func.Id = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("\nDigite o nome do funcionário: ");
+            Console.WriteLine("Digite o nome do funcionário: ");
             func.Nome = Console.ReadLine();
-            
-            Console.WriteLine("\nDigite o CPF: ");
+
+            Console.WriteLine("Digite o Cpf: ");
             func.Cpf = Console.ReadLine();
 
-            Console.WriteLine("\nDigite a data de Admissão (dd/mm/yyyy): ");
+            Console.WriteLine("Digite a data de admissão: ");
             func.DataAdmissao = DateTime.Parse(Console.ReadLine());
 
-            Console.WriteLine("\nDigite o Salário: ");
+            Console.WriteLine("Digite o Salário: ");
             func.Salario = decimal.Parse(Console.ReadLine());
 
-            func.TipoFuncionario = verificarOpcao();
+            Console.WriteLine("Escolha o tipo de Funcionário (1 - CLT / 2 - Aprendiz): ");
+            int opcao = int.Parse(Console.ReadLine());
+
+            //Operador Ternário - Interpretação: Se a consição dos parênteses for verdadeira,
+            //escolhe o que está depois da "?", caso contrário, escolhe o que está depois dos ":"
+            func.TipoFuncionario = (opcao == 1) ? TipoFuncionarioEnum.CLT : TipoFuncionarioEnum.Aprendiz;
+
             func.ReajustarSalario();
-            func.ValorReajustadoSalario();
-            decimal valorDescontoVT = func.CalcularDescontoVR(6);
+            decimal valorDescontoVT = func.CalcularDescontoVT(6);
 
-            Console.WriteLine("\n==========================================");
-            Console.WriteLine($"O desconto do VT em folha é R$ {valorDescontoVT}.");
-            Console.WriteLine($"O salário reajustado em 10% é R$ {func.Salario}.");
-            Console.WriteLine($"O valor do reajuste é {func.Reajuste}");
-            Console.WriteLine("==========================================\n");
+            string periodoExperiencia = func.ExibirPeriodoExperiencia();
 
-            Console.WriteLine("Registro efetuado com sucesso. Qual(is) informação(ões) deseja exibir?\n1 - ID\n2 - Nome\n3 - CPF\n4 - Data de Admissão\n5 - Salário\n6 - Tipo de contrato\n7 - Todas as opções\n8 - Sair");
-            int escolha = int.Parse(Console.ReadLine());
+            bool onbool = true;
+            do
+            {
+                Console.WriteLine("\n\nEscolha a informação que deseja exibir:\n1 - Id\n2 - Nome\n3 - Cpf\n4 - Data de Admissão\n5 - Salário\n6 - Tipo de contrato\n7 - Valor do desconto do VT\n8 - Período de experiência\n9 - Todas");
+                int opt = int.Parse(Console.ReadLine());
 
-            switch(escolha) {
-                case 1:
-                    //FINALIZAR
-                    break;
+                switch (opt)
+                {
+                    case 1:
+                        Console.WriteLine($"Id: {func.Id}.\n");
+                        onbool = false;
+                        break;
+                    case 2:
+                        Console.WriteLine($"Nome: {func.Nome}.\n");
+                        onbool = false;
+                        break;
+                    case 3:
+                        Console.WriteLine($"Cpf: {func.Cpf}.\n");
+                        onbool = false;
+                        break;
+                    case 4:
+                        Console.WriteLine($"Data de admissão: {func.DataAdmissao}.\n");
+                        onbool = false;
+                        break;
+                    case 5:
+                        Console.WriteLine($"O salário reajustado é {func.Salario}.\n");
+                        onbool = false;
+                        break;
+                    case 6:
+                        Console.WriteLine($"Tipo de contrato: {func.TipoFuncionario}.\n");
+                        onbool = false;
+                        break;
+                    case 7:
+                        Console.WriteLine($"O Desconto do VT é {valorDescontoVT}.\n");
+                        onbool = false;
+                        break;
+                    case 8:
+                        Console.WriteLine($"{periodoExperiencia}");
+                        onbool = false;
+                        break;
+                    case 9:
+                        Console.WriteLine("==============================");
+                        Console.WriteLine($"Id: {func.Id}.");
+                        Console.WriteLine($"Nome: {func.Nome}.");
+                        Console.WriteLine($"Cpf: {func.Cpf}.");
+                        Console.WriteLine($"Data de admissão: {func.DataAdmissao}.");
+                        Console.WriteLine($"O salário reajustado é {func.Salario}.");
+                        Console.WriteLine($"Tipo de contrato: {func.TipoFuncionario}.");
+                        Console.WriteLine($"O Desconto do VT é {valorDescontoVT}.");
+                        Console.WriteLine($"{periodoExperiencia}");
+                        Console.WriteLine("==============================");
+                        onbool = false;
+                        break;
+                    default:
+                        Console.WriteLine("\nOpção inválida. Escolha novamente.");
+                        onbool = true;
+                        break;
+                }
             }
+            while (onbool);
         }
     }
 }

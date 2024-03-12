@@ -17,13 +17,13 @@ namespace Aula02RH.Models
         public TipoFuncionarioEnum TipoFuncionario { get; set; } 
         public void ReajustarSalario() { Salario = Salario + (Salario * 10/100); }
         public void ValorReajustadoSalario() { Reajuste = Salario * 10/100; }
-        public decimal CalcularDescontoVR(decimal percentual) {
+        public decimal CalcularDescontoVT(decimal percentual) {
             decimal desconto = this.Salario * percentual/100;
             return desconto;
         }
         public string ExibirPeriodoExperiencia()
         {
-            string periodoExperiencia = string.Format("Períodos de Experiencia: {0} até {1}", DataAdmissao, DataAdmissao.AddMonths(3));
+            string periodoExperiencia = string.Format("Período de Experiencia: {0} até {1}", DataAdmissao, DataAdmissao.AddMonths(3));
             return periodoExperiencia;
         }
         
